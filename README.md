@@ -18,13 +18,14 @@ as well as editing the `.env` to change the iterations of the benchmark.
 * docker
 * docker-compose
 ### Without docker
+* make
 * python >= 3.6
 * pipenv
 * g++
 * clang
 * cargo
 
-## Instalation
+## Running the benchmark
 ### With docker
 Just run `docker-compose run app` ;)
 
