@@ -1,0 +1,21 @@
+[package]
+name = "f64-dist-benchmark"
+version = "0.1.0"
+authors = ["Giuliano Oliveira <giuliano.programador@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[workspace]
+members = [
+    "dataset",
+]
+
+[profile.release]
+lto = true
+panic = "abort"
+codegen-units = 1
+debug = 0
+
+[dependencies]
+dataset = {path="./dataset"}
