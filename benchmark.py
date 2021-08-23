@@ -1,10 +1,20 @@
 from subprocess import check_output
 from os import environ
-import numpy as np
 from tqdm import tqdm
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List
+
+
+def mean(it, l=None):
+    if l == None:
+        l = len(it)
+    return sum(it) / l
+
+
+def std(it):
+    mu = mean(it)
+    return mean(((x - mu) ** 2 for x in it), len(it)) ** 0.5
 
 
 @dataclass
@@ -22,14 +32,18 @@ class ResultSet:
     dataset: str
 
     def print(self):
-        print(self.dataset)
+        print(f"## {self.dataset}")
         print(
-            f"{'name':<20} {'avg_time':<10} {'std_time':<10} {'min_time':<10} {'max_time':<10}"
+            *(
+                f"|{'**name**':<20}|{'**avg_time**':<15}|{'**std_time**':<15}|{'**min_time**':<15}|{'**max_time**':<15}|",
+                f"|{'-'*20}|{'-'*15}|{'-'*15}|{'-'*15}|{'-'*15}|",
+            ),
+            sep="\n",
         )
 
         for res in self.results:
             print(
-                f"{res.bin:<20} {res.avg_time:<10.2f} {res.std_time:<10.2f} {res.min_time:<10.2f} {res.max_time:<10.2f}"
+                f"|{res.bin:<20}|{res.avg_time:<15.2f}|{res.std_time:<15.2f}|{res.min_time:<15.2f}|{res.max_time:<15.2f}|"
             )
 
 
@@ -62,14 +76,13 @@ for dataset in tqdm(datasets, postfix="datasets"):
                 errs.add((err, dataset, bin))
         if not times:
             continue
-        times = np.array(times)
         results.append(
             Result(
                 bin=bin.stem,
-                avg_time=times.mean(),
-                std_time=times.std(),
-                min_time=times.min(),
-                max_time=times.max(),
+                avg_time=mean(times),
+                std_time=std(times),
+                min_time=min(times),
+                max_time=max(times),
             )
         )
     results.sort(key=lambda r: r.min_time)
