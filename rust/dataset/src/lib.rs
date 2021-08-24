@@ -30,7 +30,7 @@ impl Matrix {
             (0..dimsize)
                 .map(|_| {
                     reader.read_exact(&mut buff).expect("Couldn't read");
-                    f64::from_ne_bytes(buff.try_into().expect("couldn't fit buff into array"))
+                    f64::from_ne_bytes(buff)
                 })
                 .collect(),
         )
