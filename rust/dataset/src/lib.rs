@@ -78,7 +78,7 @@ impl Dataset {
 
         Self { dim, size, a, b }
     }
-    pub fn write_to_file(&self, file_name: std::path::PathBuf) -> () {
+    pub fn write_to_file(&self, file_name: std::path::PathBuf) {
         let file = File::create(file_name).expect("create failed");
         let mut writer = BufWriter::with_capacity(BUFFSIZE, file);
         writer
