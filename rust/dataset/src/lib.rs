@@ -29,7 +29,7 @@ impl Matrix {
         Self(
             (0..dimsize)
                 .map(|_| {
-                    reader.read(&mut buff).expect("Couldn't read");
+                    reader.read_exact(&mut buff).expect("Couldn't read");
                     f64::from_ne_bytes(buff.try_into().expect("couldn't fit buff into array"))
                 })
                 .collect(),
@@ -38,7 +38,7 @@ impl Matrix {
 
     fn write_bytes(&self, writer: &mut dyn Write) {
         for x in self.0.iter() {
-            writer.write(&x.to_ne_bytes()).expect("write failed");
+            writer.write_all(&x.to_ne_bytes()).expect("write failed");
         }
     }
 }
