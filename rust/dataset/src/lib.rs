@@ -68,8 +68,8 @@ impl Dataset {
         let dim = u64::from_ne_bytes(buffer[0..8].try_into().expect("couldn't fit buff"));
         let size = u64::from_ne_bytes(buffer[8..16].try_into().expect("couldn't fit buff"));
 
-        assert_eq!(dim > 0, true);
-        assert_eq!(size > 0, true);
+        assert!(dim > 0);
+        assert!(size > 0);
 
         let dimsize = dim * size;
 
