@@ -30,7 +30,7 @@ fn main() {
     ans.reserve((dataset.dim * dataset.dim) as usize);
     for a in dataset.iter_a() {
         for b in dataset.iter_b() {
-            ans.push(dist(&a, &b));
+            ans.push(dist(a, b));
         }
     }
     // let ans: Vec<f64> = dataset
