@@ -9,10 +9,7 @@ use std::time::Instant;
 fn dist(a: &[f64], b: &[f64]) -> f64 {
     a.iter()
         .zip(b.iter())
-        .map(|(x, y)| {
-            let d = y - x;
-            d * d
-        })
+        .map(|(x, y)| (y - x).powf(2.))
         .sum::<f64>()
         .sqrt()
 }
